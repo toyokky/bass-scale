@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ベース指板スケール表示アプリ</title>
+    <title>ベース指板スケール表示アプリβ版</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
@@ -298,11 +298,17 @@
             color: #777;
             font-size: 14px;
         }
+        
+        .notice {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>ベース指板スケール表示アプリ</h1>
+        <h1>ベース指板スケール表示アプリβ版</h1>
         
         <div class="controls">
             <div class="control-group">
@@ -378,6 +384,15 @@
         </div>
 
         <footer>
+            <div class="notice">
+                <p>
+                    ※4弦～7弦ベース対応。<br>
+                    ※レギュラー、半音下げ、1音下げ、ドロップDチューニングに対応。<br>
+                    ※スマホでもPCでも見れますがスマホの縦向きは指板が見切れます。横向きでどうぞ。<br>
+                    ※フレットの音名をクリックすると音がでますがスマホだと低音が聞き取りずらいです。<br>
+                    ※β版（お試し期間）のため不具合あったらごめんなさい。
+                </p>
+            </div>
             <p>&copy; 2025 とよきち</p>
         </footer>
     </div>
@@ -668,12 +683,11 @@
             if (savedState) {
                 const state = JSON.parse(savedState);
                 stringCountEl.value = state.stringCount || '4';
-                updateTuningOptions(state.tuning); // チューニングリストを更新してから値を設定
+                updateTuningOptions(state.tuning);
                 rootNoteEl.value = state.rootNote || 'C';
                 scaleTypeEl.value = state.scaleType || 'major';
                 setDisplayMode(state.displayMode || 'noteName');
             } else {
-                // 保存された設定がない場合は、デフォルトで描画
                 updateTuningOptions();
             }
         }
