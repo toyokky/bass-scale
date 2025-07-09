@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ベース指板スケール表示アプリ（べ～た版）</title>
+    <title>ベース指板スケール表示アプリ</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -297,7 +298,6 @@
             color: #777;
             font-size: 14px;
         }
-
     </style>
 </head>
 <body>
@@ -523,16 +523,23 @@
             }, uniqueNotes.length * 300 + 1000);
         }
         
-        function updateTuningOptions() {
+        function updateTuningOptions(savedTuning = null) {
             const count = stringCountEl.value;
             const availableTunings = tunings[count];
+            let currentTuning = tuningEl.value;
             tuningEl.innerHTML = '';
+
             for (const key in availableTunings) {
                 const option = document.createElement('option');
                 option.value = key;
                 option.textContent = availableTunings[key].name;
                 tuningEl.appendChild(option);
             }
+            
+            if (savedTuning && availableTunings[savedTuning]) {
+                tuningEl.value = savedTuning;
+            }
+            
             drawFretboard();
         }
 
@@ -618,6 +625,7 @@
             });
             
             updateScaleInfo(rootNote, scaleType, getScaleNotes(rootNote, scaleType));
+            saveState();
         }
         
         function updateScaleInfo(root, scaleType, scaleNotesArray) {
@@ -644,8 +652,34 @@
             drawFretboard();
         }
 
+        function saveState() {
+            const state = {
+                stringCount: stringCountEl.value,
+                tuning: tuningEl.value,
+                rootNote: rootNoteEl.value,
+                scaleType: scaleTypeEl.value,
+                displayMode: currentDisplayMode
+            };
+            localStorage.setItem('bassAppState', JSON.stringify(state));
+        }
+
+        function loadState() {
+            const savedState = localStorage.getItem('bassAppState');
+            if (savedState) {
+                const state = JSON.parse(savedState);
+                stringCountEl.value = state.stringCount || '4';
+                updateTuningOptions(state.tuning); // チューニングリストを更新してから値を設定
+                rootNoteEl.value = state.rootNote || 'C';
+                scaleTypeEl.value = state.scaleType || 'major';
+                setDisplayMode(state.displayMode || 'noteName');
+            } else {
+                // 保存された設定がない場合は、デフォルトで描画
+                updateTuningOptions();
+            }
+        }
+
         // --- Event Listeners ---
-        stringCountEl.addEventListener('change', updateTuningOptions);
+        stringCountEl.addEventListener('change', () => updateTuningOptions());
         tuningEl.addEventListener('change', drawFretboard);
         rootNoteEl.addEventListener('change', drawFretboard);
         scaleTypeEl.addEventListener('change', drawFretboard);
@@ -654,7 +688,8 @@
         playScaleButton.addEventListener('click', playScaleSequence);
         
         // --- Initial Load ---
-        updateTuningOptions();
+        loadState();
+
     </script>
 </body>
 </html>
