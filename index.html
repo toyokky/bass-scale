@@ -303,6 +303,26 @@
             margin-bottom: 20px;
             line-height: 1.6;
         }
+        
+        .version-history {
+            margin-top: 20px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+        
+        .version-history h3 {
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+        
+        .version-history ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .version-history li {
+            margin-bottom: 5px;
+        }
 
     </style>
 </head>
@@ -337,12 +357,20 @@
             <div class="control-group">
                 <label for="scaleType">スケール</label>
                 <select id="scaleType">
-                    <option value="major">メジャー</option> <option value="minor">マイナー</option>
-                    <option value="majorPentatonic">メジャーペンタトニック</option> <option value="minorPentatonic">マイナーペンタトニック</option>
-                    <option value="ionian">イオニアン（メジャー）</option> <option value="dorian">ドリアン</option>
-                    <option value="phrygian">フリジアン</option> <option value="lydian">リディアン</option>
-                    <option value="mixolydian">ミクソリディアン</option> <option value="aeolian">エオリアン（マイナー）</option>
-                    <option value="locrian">ロクリアン</option> <option value="harmonicMinor">ハーモニックマイナー</option>
+                    <option value="major">メジャー</option>
+                    <option value="minor">マイナー</option>
+                    <option value="majorPentatonic">メジャーペンタトニック</option>
+                    <option value="minorPentatonic">マイナーペンタトニック</option>
+                    <option value="majorBlues">メジャーブルース</option>
+                    <option value="minorBlues">マイナーブルース</option>
+                    <option value="ionian">イオニアン（メジャー）</option>
+                    <option value="dorian">ドリアン</option>
+                    <option value="phrygian">フリジアン</option>
+                    <option value="lydian">リディアン</option>
+                    <option value="mixolydian">ミクソリディアン</option>
+                    <option value="aeolian">エオリアン（マイナー）</option>
+                    <option value="locrian">ロクリアン</option>
+                    <option value="harmonicMinor">ハーモニックマイナー</option>
                     <option value="melodicMinor">メロディックマイナー</option>
                 </select>
             </div>
@@ -393,6 +421,13 @@
                     ※β版（お試し期間）のため不具合あったらごめんなさい。
                 </p>
             </div>
+            <div class="version-history">
+                <h3>改版履歴</h3>
+                <ul>
+                    <li>Ver. 0.2: スケールへメジャーブルーススケールとマイナーブルーススケールを追加。</li>
+                </ul>
+            </div>
+            <p>Ver. 0.2</p>
             <p>&copy; 2025 とよきち</p>
         </footer>
     </div>
@@ -429,20 +464,39 @@
         const degreeDisplay = { 0: '1', 1: 'b2', 2: '2', 3: 'm3', 4: 'M3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'm7', 11: 'M7' };
         
         const scales = {
-            major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10],
-            majorPentatonic: [0, 2, 4, 7, 9], minorPentatonic: [0, 3, 5, 7, 10],
-            ionian: [0, 2, 4, 5, 7, 9, 11], dorian: [0, 2, 3, 5, 7, 9, 10],
-            phrygian: [0, 1, 3, 5, 7, 8, 10], lydian: [0, 2, 4, 6, 7, 9, 11],
-            mixolydian: [0, 2, 4, 5, 7, 9, 10], aeolian: [0, 2, 3, 5, 7, 8, 10],
-            locrian: [0, 1, 3, 5, 6, 8, 10], harmonicMinor: [0, 2, 3, 5, 7, 8, 11],
+            major: [0, 2, 4, 5, 7, 9, 11],
+            minor: [0, 2, 3, 5, 7, 8, 10],
+            majorPentatonic: [0, 2, 4, 7, 9],
+            minorPentatonic: [0, 3, 5, 7, 10],
+            majorBlues: [0, 2, 3, 4, 7, 9],
+            minorBlues: [0, 3, 5, 6, 7, 10],
+            ionian: [0, 2, 4, 5, 7, 9, 11],
+            dorian: [0, 2, 3, 5, 7, 9, 10],
+            phrygian: [0, 1, 3, 5, 7, 8, 10],
+            lydian: [0, 2, 4, 6, 7, 9, 11],
+            mixolydian: [0, 2, 4, 5, 7, 9, 10],
+            aeolian: [0, 2, 3, 5, 7, 8, 10],
+            locrian: [0, 1, 3, 5, 6, 8, 10],
+            harmonicMinor: [0, 2, 3, 5, 7, 8, 11],
             melodicMinor: [0, 2, 3, 5, 7, 9, 11]
         };
         
         const scaleNames = {
-            major: 'メジャー', minor: 'マイナー', majorPentatonic: 'メジャーペンタトニック', minorPentatonic: 'マイナーペンタトニック',
-            ionian: 'イオニアン（メジャー）', dorian: 'ドリアン', phrygian: 'フリジアン', lydian: 'リディアン',
-            mixolydian: 'ミクソリディアン', aeolian: 'エオリアン（マイナー）', locrian: 'ロクリアン',
-            harmonicMinor: 'ハーモニックマイナー', melodicMinor: 'メロディックマイナー'
+            major: 'メジャー',
+            minor: 'マイナー',
+            majorPentatonic: 'メジャーペンタトニック',
+            minorPentatonic: 'マイナーペンタトニック',
+            majorBlues: 'メジャーブルース',
+            minorBlues: 'マイナーブルース',
+            ionian: 'イオニアン（メジャー）',
+            dorian: 'ドリアン',
+            phrygian: 'フリジアン',
+            lydian: 'リディアン',
+            mixolydian: 'ミクソリディアン',
+            aeolian: 'エオリアン（マイナー）',
+            locrian: 'ロクリアン',
+            harmonicMinor: 'ハーモニックマイナー',
+            melodicMinor: 'メロディックマイナー'
         };
 
         // --- DOM Elements ---
