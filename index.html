@@ -391,8 +391,8 @@
                 <div class="scale-notes" id="scaleNotes">C - D - E - F - G - A - B</div>
                 <button id="playScaleButton">再生 ▶</button>
             </div>
-            <div class="scale-degrees" id="scaleDegrees">1度 - 2度 - 3度 - 4度 - 5度 - 6度 - 7度</div>
-            <div class="scale-degrees-verbose" id="scaleDegreesVerbose">1st - 2nd - 3rd - 4th - 5th - 6th - 7th</div>
+            <div class="scale-degrees" id="scaleDegrees">1度 - 長2度 - 長3度 - 4度 - 5度 - 長6度 - 長7度</div>
+            <div class="scale-degrees-verbose" id="scaleDegreesVerbose">1st - M2nd - M3rd - 4th - 5th - M6th - M7th</div>
         </div>
         
         <div class="fretboard">
@@ -413,7 +413,7 @@
             </div>
         </div>
 
-        <footer>
+        <footer style="text-align: left;">
             <div class="notice">
                 <h3>注意書き</h3>
                 <p>
@@ -427,10 +427,13 @@
             <div class="version-history">
                 <h3>改版履歴</h3>
                 <ul>
-                    <li>Ver. 0.2: スケールへメジャーブルーススケールとマイナーブルーススケールを追加。</li>
+                    <li>Ver. 0.1: 2025/07/09, β版の公開。</li>
+                    <li>Ver. 0.2: 2025/07/13, スケールへメジャーブルーススケールとマイナーブルーススケールを追加。</li>
+                    <li>Ver. 0.3: 2025/07/27, 度数の数え方を修正（減2度→短2度、長短系へ長短を付与。）</li>
                 </ul>
             </div>
-            <p>Ver. 0.2</p>
+            <br>
+            <p>ベース指板スケール表示アプリβ版 Ver. 0.3</p>
             <p>&copy; 2025 とよきち</p>
         </footer>
     </div>
@@ -462,9 +465,9 @@
             }
         };
 
-        const degreeNames = { 0: '1度', 1: '短2度', 2: '2度', 3: '短3度', 4: '3度', 5: '4度', 6: '減5度', 7: '5度', 8: '短6度', 9: '6度', 10: '短7度', 11: '7度' };
-        const degreeVerboseNames = { 0: '1st', 1: 'b2nd', 2: '2nd', 3: 'm3rd', 4: '3rd', 5: '4th', 6: 'b5th', 7: '5th', 8: 'b6th', 9: '6th', 10: 'm7th', 11: '7th' };
-        const degreeDisplay = { 0: '1', 1: 'b2', 2: '2', 3: 'm3', 4: 'M3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'm7', 11: 'M7' };
+        const degreeNames = { 0: '1度', 1: '短2度', 2: '長2度', 3: '短3度', 4: '長3度', 5: '4度', 6: '減5度', 7: '5度', 8: '短6度', 9: '長6度', 10: '短7度', 11: '長7度' };
+        const degreeVerboseNames = { 0: '1st', 1: 'm2nd', 2: '2nd', 3: 'm3rd', 4: '3rd', 5: '4th', 6: 'b5th', 7: '5th', 8: 'm6th', 9: '6th', 10: 'm7th', 11: '7th' };
+        const degreeDisplay = { 0: '1', 1: 'm2', 2: 'M2', 3: 'm3', 4: 'M3', 5: '4', 6: 'b5', 7: '5', 8: 'm6', 9: 'M6', 10: 'm7', 11: 'M7' };
         
         const scales = {
             major: [0, 2, 4, 5, 7, 9, 11],
